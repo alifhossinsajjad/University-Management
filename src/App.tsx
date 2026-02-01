@@ -1,12 +1,8 @@
 
-import './App.css'
+import MainLayout from "./components/layout/MainLayout";
 
 function App() {
-
-
-  return (
-<>university</>
-  )
+  return <MainLayout />;
 }
 
-export default App
+export default App;
