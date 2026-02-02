@@ -1,62 +1,85 @@
-import { Children } from "react";
+import { type ReactNode } from "react";
 import AdminDashboard from "../pages/admin/AdminDashboard";
 import CreateAdmin from "../pages/admin/CreateAdmin";
 import CreateFaculty from "../pages/admin/CreateFaculty";
 import CreateStudent from "../pages/admin/CreateStudent";
 
-const adminPaths2 = [
+
+type TRoute = {
+path : string,
+element : ReactNode
+}
+
+
+
+
+
+const adminPaths = [
   {
     name: "Dashboard",
-    path: "/admin/dashboard",
-    Component: <AdminDashboard />,
+    path: "dashboard",
+    element: <AdminDashboard />,
   },
   {
     name: "User Management",
     Children: [
       {
         name: "Create Admin",
-        path: "/admin/create-admin",
-        Component: <CreateAdmin />,
+        path: "create-admin",
+        element: <CreateAdmin />,
       },
       {
         name: "Create Faculty",
-        path: "/admin/create-faculty",
-        Component: <CreateFaculty/>,
+        path: "create-faculty",
+        element: <CreateFaculty />,
       },
       {
         name: "Create Student",
-        path: "/admin/create-student",
-        Component: <CreateStudent/>,
-      }, 
-    ],
-  },
-  {
-    name: "Course Management",
-    Children: [
-      {
-        name: "Offered Course",
-        path: "/admin/offered-course",
-        Component: <CreateAdmin />,
+        path: "create-student",
+        element: <CreateStudent />,
       },
     ],
   },
 ];
 
-export const adminPaths = [
-  {
-    path: "dashboard",
-    Component: AdminDashboard,
-  },
-  {
-    path: "create-student",
-    Component: CreateStudent,
-  },
-  {
-    path: "create-admin",
-    Component: CreateAdmin,
-  },
-  {
-    path: "create-faculty",
-    Component: CreateFaculty,
-  },
-];
+//programetical way
+
+export const adminRoutes = adminPaths.reduce((acc : TRoute[], item) => {
+  if (item.path && item.element) {
+    acc.push({
+      path: item.path,
+      element: item.element,
+    });
+  }
+
+  if (item.Children) {
+    item.Children.forEach((child) => {
+      acc.push({
+        path: child.path,
+        element: child.element,
+      });
+    });
+  }
+  return acc
+}, []);
+
+//! hard code way
+
+// export const adminPaths = [
+//   {
+//     path: "dashboard",
+//     Component: AdminDashboard,
+//   },
+//   {
+//     path: "create-student",
+//     Component: CreateStudent,
+//   },
+//   {
+//     path: "create-admin",
+//     Component: CreateAdmin,
+//   },
+//   {
+//     path: "create-faculty",
+//     Component: CreateFaculty,
+//   },
+// ];
