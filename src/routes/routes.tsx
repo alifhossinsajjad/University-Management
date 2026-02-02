@@ -5,9 +5,6 @@ import Register from "../pages/Register";
 import { adminRoutes } from "./adminRoutes";
 
 
-
-
-
 export const router = createBrowserRouter([
   {
     path: "/",
