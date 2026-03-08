@@ -25,12 +25,20 @@ export const router = createBrowserRouter([
   },
   {
     path: "/faculty",
-    element: <App />,
+    element: (
+      <PrivetRoute>
+        <App />
+      </PrivetRoute>
+    ),
     children: routesGenaretor(facultyPaths),
   },
   {
     path: "/student",
-    element: <App />,
+    element: (
+      <PrivetRoute>
+        <App />
+      </PrivetRoute>
+    ),
     children: routesGenaretor(studentPaths),
   },
   {
