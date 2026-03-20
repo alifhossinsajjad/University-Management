@@ -1,5 +1,4 @@
 import { Button } from "antd";
-import React from "react";
 import { useForm, type FieldValues } from "react-hook-form";
 import { useLoginMutation } from "../redux/feature/auth/authApi";
 import { useAppDispatch } from "../redux/hooks";
@@ -9,7 +8,7 @@ import { useNavigate } from "react-router";
 import { toast } from "sonner";
 
 const Login = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const { register, handleSubmit } = useForm({
     defaultValues: {
       userId: "0001",
@@ -19,7 +18,7 @@ const Login = () => {
   const [login] = useLoginMutation();
   const dispatch = useAppDispatch();
 
-  const onsubmit = async (data : FieldValues) => {
+  const onsubmit = async (data: FieldValues) => {
     const userInfo = {
       id: data.userId,
       password: data.password,
@@ -30,11 +29,12 @@ const Login = () => {
 
     dispatch(setUser({ user: user, token: res.data.accessToken }));
 
-    toast.success('login successfully')
+    toast.success("login successfully");
     console.log(res);
-    navigate(`/${user?.role}/dashboard`)
-    // navigate(`/`)
-    
+
+    // Normalize role for navigation
+    const role = user?.role === 'superAdmin' ? 'admin' : user?.role;
+    navigate(`/${role}/dashboard`);
   };
 
   return (

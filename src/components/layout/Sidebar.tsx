@@ -1,9 +1,10 @@
 import { Layout, Menu } from "antd";
-import React from "react";
 import { sidebarItemsGenerator } from "../../utils/sidebarItemsGenerator";
 import { adminPaths } from "../../routes/adminRoutes";
 import { facultyPaths } from "../../routes/facultyRoutes";
 import { studentPaths } from "../../routes/studentRoutes";
+import { selectCurrentUser } from "../../redux/feature/auth/authSlice";
+import { useAppSelector } from "../../redux/hooks";
 
 const { Sider } = Layout;
 
@@ -13,9 +14,16 @@ const userRole = {
   STUDENT: "student",
 };
 
+import type { MenuProps } from "antd";
+
 const Sidebar = () => {
-  const role = "student";
-  let sidebarItems;
+  const user = useAppSelector(selectCurrentUser);
+
+  if (!user) return null;
+
+  let sidebarItems: MenuProps["items"] = [];
+
+  const role = user.role === 'superAdmin' ? 'admin' : user.role;
 
   switch (role) {
     case userRole.ADMIN:
@@ -31,35 +39,13 @@ const Sidebar = () => {
       break;
 
     default:
-      break;
+      sidebarItems = [];
   }
 
   return (
     <Sider breakpoint="lg" collapsedWidth="0">
-      <div
-        style={{
-          font: "medium",
-          color: "white",
-          textAlign: "center",
-          fontSize: "8px",
-          height: "40px",
-          display: "flex",
-          marginLeft: "15px",
-          marginTop: "10px",
-          alignItems: "center",
-        }}
-      >
-        <h1>University Management</h1>
-      </div>
-      <Menu
-        theme="dark"
-        mode="inline"
-        defaultSelectedKeys={["4"]}
-        items={sidebarItems}
-        //  items={sidebarItemsGenerator(adminPaths,"admin")}
-      />
+      <Menu theme="dark" mode="inline" items={sidebarItems} />
     </Sider>
   );
 };
-
 export default Sidebar;

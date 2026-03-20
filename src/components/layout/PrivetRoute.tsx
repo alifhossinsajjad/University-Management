@@ -1,13 +1,14 @@
 import React, { type ReactNode } from "react";
 import { useAppSelector } from "../../redux/hooks";
-import { userCurrentToken } from "../../redux/feature/auth/authSlice";
+
 import { Navigate } from "react-router";
+import { selectCurrentUser } from "../../redux/feature/auth/authSlice";
 
 const PrivetRoute = ({ children }: { children: ReactNode }) => {
-  const token = useAppSelector(userCurrentToken);
+   const user = useAppSelector(selectCurrentUser);
 
-  if (!token) {
-    return <Navigate to={"/login"} replace={true} />;
+  if (!user) {
+    return <Navigate to="/login" replace />;
   }
 
   return children;
