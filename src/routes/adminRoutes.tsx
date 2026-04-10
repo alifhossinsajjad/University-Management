@@ -10,13 +10,14 @@ export const adminPaths = [
     path: "dashboard",
     element: <AdminDashboard />,
   },
+
   {
     name: "Academic Management",
     children: [
       {
         name: "Academic Semester",
         path: "academic-semester",
-        element: <AcademicSemester/>,
+        element: <AcademicSemester />,
       },
     ],
   },
