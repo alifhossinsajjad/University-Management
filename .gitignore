@@ -31,8 +31,6 @@ config.bat
 
 
 node_modules/
-.env
-.env.local
 dist/
 branch_structure.json
 temp_auto_push.bat
